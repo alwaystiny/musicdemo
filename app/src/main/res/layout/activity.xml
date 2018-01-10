@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:id="@+id/a"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <magicasakura.widgets.TintToolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minHeight="?actionBarSize"
+        android:background="@color/theme_color_primary"
+        android:fitsSystemWindows="true"
+        app:layout_scrollFlags = 'enterAlways|scroll'
+        >
+        <RelativeLayout
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="?actionBarSize">
+            <ImageView
+                android:id="@+id/bar_net"
+                android:layout_toLeftOf="@+id/bar_music"
+                android:layout_width="55dp"
+                android:layout_height="match_parent"
+                android:src="@drawable/actionbar_disco"
+                android:clickable="true"/>
+            <ImageView
+                android:id="@+id/bar_music"
+                android:layout_width="55dp"
+                android:layout_height="match_parent"
+                android:layout_centerInParent="true"
+                android:src="@drawable/actionbar_music"
+                android:clickable="true"/>
+            <ImageView
+                android:id="@+id/bar_friends"
+                android:layout_toRightOf="@id/bar_music"
+                android:layout_width="55dp"
+                android:layout_height="match_parent"
+                android:src="@drawable/actionbar_friends"
+                android:clickable="true"/>
+            <ImageView
+                android:id="@+id/bar_search"
+                android:scaleType="center"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_width="23dp"
+                android:layout_height="23dp"
+                android:src="@drawable/actionbar_search"/>
+
+        </RelativeLayout>
+    </magicasakura.widgets.TintToolbar>
+    <music.demo.com.widget.CustomViewPager
+        android:id="@+id/main_viewpager"
+        android:layout_below="@id/toolbar"
+        android:layout_above="@+id/bottom_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+    <FrameLayout
+        android:layout_alignParentBottom="true"
+        android:id="@+id/bottom_container"
+        android:layout_width="match_parent"
+        android:layout_height="50dp" />
+</RelativeLayout>
