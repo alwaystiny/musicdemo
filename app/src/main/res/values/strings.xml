@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">仿网易云</string>
+    <string name="nav_switch_night_mode">夜间模式</string>
+    <string name="nav_vip">下载歌曲品质</string>
+    <string name="nav_exit">退出</string>
+    <string name="nav_time">定时关闭音乐</string>
+    <string name="nav_skin">主题换肤</string>
+    <string name="nav_drawer_open">打开侧栏</string>
+    <string name="nav_drawer_close">关闭侧栏</string>
 </resources>

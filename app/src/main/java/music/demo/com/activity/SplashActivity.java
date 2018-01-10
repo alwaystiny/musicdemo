@@ -43,15 +43,15 @@ public class SplashActivity extends Activity{
                 runApp();
             }
         });
-        if(Build.VERSION.SDK_INT <23){
+//        if(Build.VERSION.SDK_INT <23){
             runApp();
-        } else {
-            if(mPermissionHelper.isAllRequestedPermissionGranted()){
-                runApp();
-            } else {
-                mPermissionHelper.applyPermissions();
-            }
-        }
+//        } else {
+//            if(mPermissionHelper.isAllRequestedPermissionGranted()){
+//                runApp();
+//            } else {
+//                mPermissionHelper.applyPermissions();
+//            }
+//        }
 
     }
 

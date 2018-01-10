@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group android:id="@+id/other">
+        <item
+            android:id="@+id/nav_switch_night_mode"
+            android:icon="@mipmap/topmenu_icn_night"
+            android:title="@string/nav_switch_night_mode"/>
+        <item
+            android:id="@+id/nav_skin"
+            android:icon="@mipmap/topmenu_icn_skin"
+            android:title="@string/nav_skin"/>
+        <item
+            android:id="@+id/nav_time"
+            android:icon="@mipmap/topmenu_icn_time"
+            android:title="@string/nav_time"/>
+        <item
+            android:id="@+id/nav_vip"
+            android:icon="@mipmap/topmenu_icn_vip"
+            android:title="@string/nav_vip"/>
+        <item
+            android:id="@+id/nav_exit"
+            android:icon="@mipmap/topmenu_icn_exit"
+            android:title="@string/nav_exit"/>
+    </group>
+</menu>

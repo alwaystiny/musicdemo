@@ -1,23 +1,24 @@
 package music.demo.com.activity;
 
+import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 import android.widget.ImageView;
-import android.widget.ListView;
-
 import music.demo.com.R;
 import music.demo.com.util.HandlerUtil;
 import music.demo.com.widget.SplashScreen;
 
-public class MainActivity extends BaseActivity {
+public class MainActivity extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private SplashScreen splashScreen;
     private ImageView barnet, barmusic, barfriends, search;
     private DrawerLayout drawerLayout;
-    private ListView mLvLeftMenu;
     private ActionBar ab;
+    private NavigationView nav_view;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,7 +35,7 @@ public class MainActivity extends BaseActivity {
         barfriends = (ImageView) findViewById(R.id.bar_friends);
         search = (ImageView) findViewById(R.id.bar_search);
         drawerLayout = (DrawerLayout) findViewById(R.id.fd);
-        mLvLeftMenu = (ListView) findViewById(R.id.id_lv_left_menu);
+//        mLvLeftMenu = (ListView) findViewById(R.id.id_lv_left_menu);
 
         setToolBar();
         setViewPager();
@@ -51,10 +52,21 @@ public class MainActivity extends BaseActivity {
     private void setToolBar() {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.nav_drawer_open, R.string.nav_drawer_close);
+        drawerLayout.addDrawerListener(toggle);
+        toggle.syncState();
+
         ab = getSupportActionBar();
         ab.setDisplayHomeAsUpEnabled(true);
         ab.setHomeAsUpIndicator(R.drawable.ic_menu);
         ab.setTitle("");
+
+        nav_view = (NavigationView) findViewById(R.id.nav_view);
+        // 解决菜单图标不显示原始颜色的问题
+        nav_view.setItemIconTintList(null);
+        nav_view.setNavigationItemSelectedListener(this);
     }
 
     private void setViewPager() {
@@ -63,5 +75,10 @@ public class MainActivity extends BaseActivity {
 
     private void setUpDrawer() {
 
+    }
+
+    @Override
+    public boolean onNavigationItemSelected(MenuItem item) {
+        return false;
     }
 }
