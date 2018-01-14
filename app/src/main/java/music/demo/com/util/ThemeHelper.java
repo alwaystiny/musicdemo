@@ -4,7 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 
 /**
- *
+ * 换肤的帮助类
  * Created by liunian on 2018/1/10.
  */
 
