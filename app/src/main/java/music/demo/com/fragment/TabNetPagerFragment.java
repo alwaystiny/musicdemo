@@ -28,6 +28,8 @@ public class TabNetPagerFragment extends Fragment {
 
     private ViewPager viewPager;
     private int page = 0;
+    private RecommendFragment recommendFragment;
+    private boolean isFirstLoad = true;
 
     public static final TabNetPagerFragment newInstance(int page, String[]title){
         TabNetPagerFragment tabNetPagerFragment = new TabNetPagerFragment();
@@ -54,9 +56,19 @@ public class TabNetPagerFragment extends Fragment {
         return view;
     }
 
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if (recommendFragment==null)return;
+        if (isVisibleToUser&& isFirstLoad){
+            recommendFragment.requestData();
+            isFirstLoad = false;
+        }
+    }
+
     private void setUpViewPager(ViewPager viewPager) {
         Adapter adapter = new Adapter(getChildFragmentManager());
-        RecommendFragment recommendFragment = new RecommendFragment();
+        recommendFragment = new RecommendFragment();
         adapter.addFragment(recommendFragment,"新曲");
         adapter.addFragment(new AllPlaylistFragment(), "歌单");
         adapter.addFragment(new RankingFragment(), "排行榜");

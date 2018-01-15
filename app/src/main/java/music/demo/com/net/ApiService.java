@@ -23,4 +23,8 @@ public interface ApiService {
     @Headers("User-Agent:Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.132 Safari/537.36")
     @GET("v1/restserver/ting")
     Observable<LoodBean> getLoodView(@QueryMap Map<String,String>maps);
+
+    @Headers("User-Agent:Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.132 Safari/537.36")
+    @GET("v1/restserver/ting")
+    Observable<ResponseBody>getRecommendView(@QueryMap Map<String,String>maps);
 }
