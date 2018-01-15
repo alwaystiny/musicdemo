@@ -2,6 +2,7 @@ package music.demo.com.handler;
 
 import android.app.Application;
 import android.os.Looper;
+import android.util.Log;
 import android.widget.Toast;
 
 import java.io.File;
@@ -44,13 +45,14 @@ public class UnHandler implements Thread.UncaughtExceptionHandler {
      * @param ex
      * @return 如果处理就返回true ， 否则返回false
      */
-    private boolean handlerException(Throwable ex) {
+    private boolean handlerException(final Throwable ex) {
         if (ex==null) return false;
         new  Thread(new Runnable() {
             @Override
             public void run() {
                 Looper.prepare();
-                Toast.makeText(application.getApplicationContext(), "很抱歉,程序出现异常,即将退出.", Toast.LENGTH_SHORT).show();
+                Log.e(ex.getMessage(),ex.getCause()+"");
+//                Toast.makeText(application.getApplicationContext(), "很抱歉,程序出现异常,即将退出.", Toast.LENGTH_SHORT).show();
                 Looper.loop();
             }
         }).start();
