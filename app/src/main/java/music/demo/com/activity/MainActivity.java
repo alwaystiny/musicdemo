@@ -12,9 +12,12 @@ import android.support.v7.app.ActionBar;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
+import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,6 +38,8 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     private ActionBar ab;
     private NavigationView nav_view;
     private ArrayList<ImageView> tabs = new ArrayList<>();
+    private FrameLayout bottom;
+    private long time;
 
 
     @Override
@@ -52,6 +57,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         barfriends = (ImageView) findViewById(R.id.bar_friends);
         search = (ImageView) findViewById(R.id.bar_search);
         drawerLayout = (DrawerLayout) findViewById(R.id.fd);
+        bottom = ((FrameLayout) findViewById(R.id.bottom_container));
 //        mLvLeftMenu = (ListView) findViewById(R.id.id_lv_left_menu);
 
         setToolBar();
@@ -185,5 +191,24 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         public int getCount() {
             return mFragments.size();
         }
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        // 模拟home键返回桌面 其实没有退出应用
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            if (System.currentTimeMillis() - time > 1000){
+                Toast.makeText(this,"再按一次返回桌面",Toast.LENGTH_SHORT).show();
+                time = System.currentTimeMillis();
+            } else {
+                Intent intent = new Intent(Intent.ACTION_MAIN);
+                intent.addCategory(Intent.CATEGORY_HOME);
+                startActivity(intent);
+            }
+            return true;
+        } else {
+            return super.onKeyDown(keyCode, event);
+        }
+
     }
 }

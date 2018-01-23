@@ -3,12 +3,18 @@ package music.demo.com.fragment;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.SpannableString;
+import android.text.Spanned;
+import android.text.style.ImageSpan;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,6 +26,12 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.facebook.drawee.backends.pipeline.Fresco;
+import com.facebook.drawee.controller.AbstractDraweeController;
+import com.facebook.drawee.view.SimpleDraweeView;
+import com.facebook.imagepipeline.common.ResizeOptions;
+import com.facebook.imagepipeline.request.ImageRequest;
+import com.facebook.imagepipeline.request.ImageRequestBuilder;
 import com.google.gson.Gson;
 
 import org.json.JSONArray;
@@ -67,6 +79,8 @@ public class RecommendFragment extends Fragment {
     private GridLayoutManager gridLayoutManager1,gridLayoutManager2,gridLayoutManager3;
     private HashMap<String, View> mViewHashMap;
     private String mPosition;
+    private int width = 160;
+    private int height = 160;
 
     @Override
     public void onAttach(Context context) {
@@ -249,19 +263,53 @@ public class RecommendFragment extends Fragment {
     class RecommendAdapter extends RecyclerView.Adapter<RecommendAdapter.ItemView>{
 
         private List<RecommendListRecommendInfo> mRecomendList;
+        private SpannableString spannableString;
 
         private RecommendAdapter(List<RecommendListRecommendInfo> mRecomendList){
 
             this.mRecomendList = mRecomendList;
+            Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.mipmap.index_icn_earphone);
+            ImageSpan imageSpan = new ImageSpan(mContext, bitmap);
+            spannableString = new SpannableString("icon");
+            spannableString.setSpan(imageSpan,0,4, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         }
 
         @Override
         public ItemView onCreateViewHolder(ViewGroup parent, int viewType) {
-            return null;
+            View view = LayoutInflater.from(mContext).inflate(R.layout.recommend_playlist_item, parent, false);
+            return new ItemView(view);
         }
 
         @Override
         public void onBindViewHolder(ItemView holder, int position) {
+            RecommendListRecommendInfo info = mRecomendList.get(position);
+            ImageRequest request =
+                    ImageRequestBuilder.newBuilderWithSource(Uri.parse(info.getPic()))
+                            .setResizeOptions(new ResizeOptions(width, height))
+                    .build();
+
+            AbstractDraweeController controller = Fresco.newDraweeControllerBuilder()
+                    .setOldController(holder.art.getController())
+                    .setImageRequest(request)
+                    .build();
+
+            holder.art.setController(controller);
+            holder.name.setText(info.getTitle());
+            holder.count.setText(spannableString);
+
+            int listenum = info.getListenum();
+            if(listenum > 10000) {
+                listenum = listenum/10000;
+                holder.count.append(listenum +"万");
+            } else {
+                holder.count.append(listenum+"");
+            }
+            holder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                }
+            });
 
         }
 
@@ -277,8 +325,14 @@ public class RecommendFragment extends Fragment {
 
         class ItemView extends RecyclerView.ViewHolder{
 
+            private TextView count,name;
+            private SimpleDraweeView art;
+
             public ItemView(View itemView) {
                 super(itemView);
+                art = ((SimpleDraweeView) itemView.findViewById(R.id.playlist_art));
+                name = ((TextView) itemView.findViewById(R.id.playlist_name));
+                count = ((TextView) itemView.findViewById(R.id.playlist_listen_count));
             }
         }
     }
@@ -293,12 +347,30 @@ public class RecommendFragment extends Fragment {
 
         @Override
         public ItemView onCreateViewHolder(ViewGroup parent, int viewType) {
-            return null;
+            View inflate = LayoutInflater.from(mContext).inflate(R.layout.recommend_radio_item, parent, false);
+            return new ItemView(inflate);
         }
 
         @Override
         public void onBindViewHolder(ItemView holder, int position) {
+            RecommendListNewAlbumInfo info = mNewAlbumsList.get(position);
+            ImageRequest imageRequest = ImageRequestBuilder.newBuilderWithSource(Uri.parse(info.getPic()))
+                    .setResizeOptions(new ResizeOptions(width, height))
+                    .build();
+            AbstractDraweeController controller = Fresco.newDraweeControllerBuilder()
+                    .setImageRequest(imageRequest)
+                    .setOldController(holder.art.getController())
+                    .build();
+            holder.art.setController(controller);
+            holder.name.setText(info.getTitle());
+            holder.artist.setText(info.getAuthor());
 
+            holder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                }
+            });
         }
 
         @Override
@@ -312,9 +384,13 @@ public class RecommendFragment extends Fragment {
         }
 
         class ItemView extends RecyclerView.ViewHolder{
-
+            private TextView artist , name;
+            private SimpleDraweeView art;
             public ItemView(View itemView) {
                 super(itemView);
+                art = ((SimpleDraweeView) itemView.findViewById(R.id.radio_art));
+                artist = ((TextView) itemView.findViewById(R.id.artist_name));
+                name = ((TextView) itemView.findViewById(R.id.radio_name));
             }
         }
     }
@@ -329,11 +405,32 @@ public class RecommendFragment extends Fragment {
 
         @Override
         public ItemView onCreateViewHolder(ViewGroup parent, int viewType) {
-            return null;
+            View inflate = LayoutInflater.from(mContext).inflate(R.layout.recommend_radio_item, parent, false);
+            return new ItemView(inflate);
         }
 
         @Override
         public void onBindViewHolder(ItemView holder, int position) {
+            RecommendListRadioInfo info = mRadioList.get(position);
+            ImageRequest imageRequest = ImageRequestBuilder.newBuilderWithSource(Uri.parse(info.getPic()))
+                    .setResizeOptions(new ResizeOptions(width, height))
+                    .build();
+
+            AbstractDraweeController build = Fresco.newDraweeControllerBuilder()
+                    .setOldController(holder.art.getController())
+                    .setImageRequest(imageRequest)
+                    .build();
+
+            holder.art.setController(build);
+            holder.name.setText(info.getTitle());
+            holder.artist.setText(info.getDesc());
+
+            holder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                }
+            });
 
         }
 
@@ -349,8 +446,14 @@ public class RecommendFragment extends Fragment {
 
         class ItemView extends RecyclerView.ViewHolder{
 
+            private TextView artist , name;
+            private SimpleDraweeView art;
+
             public ItemView(View itemView) {
                 super(itemView);
+                art = ((SimpleDraweeView) itemView.findViewById(R.id.radio_art));
+                artist = ((TextView) itemView.findViewById(R.id.artist_name));
+                name = ((TextView) itemView.findViewById(R.id.radio_name));
             }
         }
     }

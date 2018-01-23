@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fresco="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_marginLeft="7dp"
+    android:layout_marginTop="6dp"
+    android:layout_height="150dp">
+
+    <com.facebook.drawee.view.SimpleDraweeView
+        android:id="@+id/radio_art"
+        android:scaleType="centerCrop"
+        android:layout_width="match_parent"
+        android:layout_height="110dp"
+        android:src="@mipmap/list_third"
+        fresco:progressBarAutoRotateInterval="1000"
+        fresco:progressBarImage="@mipmap/loading_big"
+        fresco:progressBarImageScaleType="centerInside"
+        fresco:placeholderImage="@mipmap/placeholder_disk_300"
+        fresco:placeholderImageScaleType="centerCrop"
+        />
+    <TextView
+        android:id="@+id/radio_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="12sp"
+        android:lines="1"
+        android:ellipsize="end"
+        android:textColor="@color/text_color"
+        />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/artist_name"
+        android:textColor="#696969"
+        android:textSize="10sp"
+        android:singleLine="true"
+        android:ellipsize="end"
+        android:text="3000000" />
+
+</LinearLayout>
